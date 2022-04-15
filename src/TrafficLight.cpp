@@ -74,10 +74,11 @@ void TrafficLight::cycleThroughPhases()
                 _currentPhase = TrafficLightPhase::kRed;
             else if (_currentPhase == TrafficLightPhase::kRed)
                 _currentPhase = TrafficLightPhase::kGreen;     
-        }
 
-        t_0 = std::chrono::steady_clock::now();
-        cycleTime = dist(mt);
+            _queue.send(std::move(_currentPhase));
+            t_0 = std::chrono::steady_clock::now();
+            cycleTime = dist(mt);
+        }
     }
 
     std::this_thread::sleep_for(std::chrono::milliseconds(1));
